@@ -1,8 +1,16 @@
 stages:
-  preprocesses:
-    cmd: python scripts/preprocesses.py --input Local_Storage/raw/MachineLearningRating_v3.csv --output Local_Storage/Preprocessed/edited.csv
+  eda:
+    cmd: |
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function numerical_univariate --column TotalPremium
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function categorical_univariate --column make
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function bivariate_analysis
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function detect_outliers_with_boxplot --column CalculatedPremiumPerTerm
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function agg_province
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function plan_and_payemnt
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function per_car 
     deps:
-      - scripts/preprocesses.py
-      - Local_Storage/raw/MachineLearningRating_v3.csv
-    outs:
+      - scripts/EDA.py
       - Local_Storage/Preprocessed/edited.csv
+    
+
+    

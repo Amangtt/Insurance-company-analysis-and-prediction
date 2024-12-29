@@ -1,0 +1,38 @@
+schema: '2.0'
+stages:
+  preprocesses:
+    cmd: python scripts/preprocesses.py --input Local_Storage/raw/MachineLearningRating_v3.csv
+      --output Local_Storage/Preprocessed/edited.csv
+    deps:
+    - path: Local_Storage/raw/MachineLearningRating_v3.csv
+      hash: md5
+      md5: 7fdc20ae3ef4d96b337320a8edfbf549
+      size: 528314088
+    - path: scripts/preprocesses.py
+      hash: md5
+      md5: 42b0c4fbbb9528aab1223d5d25ea1351
+      size: 601
+    outs:
+    - path: Local_Storage/Preprocessed/edited.csv
+      hash: md5
+      md5: 0c1ad89821d48167a2a0eeba75f540da
+      size: 522694795
+  eda:
+    cmd: "python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function
+      numerical_univariate --column TotalPremium\npython scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv
+      --function categorical_univariate --column make\npython scripts/EDA.py --input
+      Local_Storage/Preprocessed/edited.csv --function bivariate_analysis\npython
+      scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function detect_outliers_with_boxplot
+      --column CalculatedPremiumPerTerm\npython scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv
+      --function agg_province\npython scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv
+      --function plan_and_payemnt\npython scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv
+      --function per_car \n"
+    deps:
+    - path: Local_Storage/Preprocessed/edited.csv
+      hash: md5
+      md5: 0c1ad89821d48167a2a0eeba75f540da
+      size: 522694795
+    - path: scripts/EDA.py
+      hash: md5
+      md5: 649dc13f8540ed70572158ffb08c3ae4
+      size: 8243
