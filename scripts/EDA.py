@@ -34,7 +34,7 @@ class EDA:
         plt.xlabel(col)
         plt.ylabel('Frequency')
         plt.tight_layout()
-        plt.savefig('numerical_univariate.png')
+        plt.savefig('./Local_Storage/eda_results/numerical_univariate.png')
         plt.close()
     #By providing the columns it will compute catagorcal univariate analysis
     def categorical_univariate(self, df, col):
@@ -44,7 +44,7 @@ class EDA:
         plt.xlabel(col)
         plt.ylabel('Count')
         plt.tight_layout()
-        plt.savefig('categorical_univariate.png')
+        plt.savefig('./Local_Storage/eda_results/categorical_univariate.png')
         plt.close()
     #By providing the columns it will compute bivariate analysis
     def bivariate_analysis(self, df):
@@ -63,7 +63,7 @@ class EDA:
         plt.xlabel('Change in Total Premium', fontsize=14)
         plt.ylabel('Change in Total Claims', fontsize=14)
         plt.tight_layout()
-        plt.savefig('bivariate_analysis.png')
+        plt.savefig('./Local_Storage/eda_results/bivariate_analysis.png')
         plt.close()
     #Provided the column using visualization it we'll show as distrbution of our data
     def detect_outliers_with_boxplot(self, df, column):
@@ -71,7 +71,7 @@ class EDA:
         sns.boxplot(x=df[column], color="skyblue")
         plt.title(f"Box Plot of {column}", fontsize=16)
         plt.xlabel(column, fontsize=14)
-        plt.savefig('detect_outliers_with_boxplot.png')
+        plt.savefig('./Local_Storage/eda_results/detect_outliers_with_boxplot.png')
         plt.close()
 
     def agg_province(self, df):
@@ -97,7 +97,7 @@ class EDA:
         axs[1].set_ylabel('Total Claims')
         
         # Saves the plots
-        plt.savefig('agg_province.png')
+        plt.savefig('./Local_Storage/eda_results/agg_province.png')
         plt.close()
         return summary
     #What kind of company or individsuals make the highest claim
@@ -135,7 +135,7 @@ class EDA:
         plt.figure(figsize=(8, 6))
         plt.bar(categories, values, color=['blue', 'orange', 'green'])
         plt.title('planned payment vs recived payment', fontsize=16)
-        plt.savefig('plan_and_payemnt.png')
+        plt.savefig('./Local_Storage/eda_results/plan_and_payemnt.png')
         plt.close()
     
     #Total claims by car companies
@@ -151,7 +151,7 @@ class EDA:
         plt.title('Average Total Claims by Car brand', fontsize=16)
         plt.xlabel('Average Total Claims', fontsize=14)
         plt.ylabel('Make', fontsize=14)
-        plt.savefig('per_car.png')
+        plt.savefig('./Local_Storage/eda_results/per_car.png')
         plt.close()
         return cars
 
