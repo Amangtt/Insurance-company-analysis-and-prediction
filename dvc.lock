@@ -1,0 +1,105 @@
+schema: '2.0'
+stages:
+  preprocesses:
+    cmd: python scripts/preprocesses.py --input Local_Storage/raw/MachineLearningRating_v3.csv
+      --output Local_Storage/Preprocessed/edited.csv
+    deps:
+    - path: Local_Storage/raw/MachineLearningRating_v3.csv
+      hash: md5
+      md5: 7fdc20ae3ef4d96b337320a8edfbf549
+      size: 528314088
+    - path: scripts/preprocesses.py
+      hash: md5
+      md5: 42b0c4fbbb9528aab1223d5d25ea1351
+      size: 601
+    outs:
+    - path: Local_Storage/Preprocessed/edited.csv
+      hash: md5
+      md5: 0c1ad89821d48167a2a0eeba75f540da
+      size: 522694795
+  eda:
+    cmd: "python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function
+      numerical_univariate --column TotalPremium\npython scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv
+      --function categorical_univariate --column make\npython scripts/EDA.py --input
+      Local_Storage/Preprocessed/edited.csv --function bivariate_analysis\npython
+      scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function detect_outliers_with_boxplot
+      --column CalculatedPremiumPerTerm\npython scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv
+      --function agg_province\npython scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv
+      --function plan_and_payemnt\npython scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv
+      --function per_car \n"
+    deps:
+    - path: Local_Storage/Preprocessed/edited.csv
+      hash: md5
+      md5: 0c1ad89821d48167a2a0eeba75f540da
+      size: 522694795
+    - path: scripts/EDA.py
+      hash: md5
+      md5: 649dc13f8540ed70572158ffb08c3ae4
+      size: 8243
+  preprocess:
+    cmd: python scripts/preprocesses.py --input Local_Storage/raw/MachineLearningRating_v3.csv
+      --output Local_Storage/Preprocessed/edited.csv
+    deps:
+    - path: Local_Storage/raw/MachineLearningRating_v3.csv
+      hash: md5
+      md5: 7fdc20ae3ef4d96b337320a8edfbf549
+      size: 528314088
+    - path: scripts/preprocesses.py
+      hash: md5
+      md5: 42b0c4fbbb9528aab1223d5d25ea1351
+      size: 601
+    outs:
+    - path: Local_Storage/Preprocessed/edited.csv
+      hash: md5
+      md5: 0c1ad89821d48167a2a0eeba75f540da
+      size: 522694795
+  transform:
+    cmd: "python scripts/data_transformation.py --input Local_Storage/Preprocessed/edited.csv
+      --function feature_engineering --output Local_Storage/Preprocessed/Transformed.csv\n
+      python scripts/data_transformation.py --input Local_Storage/Preprocessed/Transformed.csv
+      --function classify_by_cus --output Local_Storage/Preprocessed/per_customer.csv\n
+      python scripts/data_transformation.py --input Local_Storage/Preprocessed/Transformed.csv
+      --function classify_by_province --output Local_Storage/Preprocessed/Classification_by_province.csv\n"
+    deps:
+    - path: Local_Storage/Preprocessed/edited.csv
+      hash: md5
+      md5: 0c1ad89821d48167a2a0eeba75f540da
+      size: 522694795
+    - path: scripts/data_transformation.py
+      hash: md5
+      md5: 72ff421dde17d6a3b3c3016793be2ac6
+      size: 3248
+    outs:
+    - path: Local_Storage/Preprocessed/Classification_by_province.csv
+      hash: md5
+      md5: b50a85652b679e0c734f609b3629a3e7
+      size: 765
+    - path: Local_Storage/Preprocessed/Transformed.csv
+      hash: md5
+      md5: cf7dd478f3ca565f9c5fa50bbe590651
+      size: 520697387
+    - path: Local_Storage/Preprocessed/per_customer.csv
+      hash: md5
+      md5: 252e7c0c4efafc47e335bb43211e653a
+      size: 450577
+  predict_premium:
+    cmd: python scripts/Train_model.py --input Local_Storage/Preprocessed/edited.csv
+      --params param.yaml --metrics metrics.json
+    deps:
+    - path: Local_Storage/Preprocessed/edited.csv
+      hash: md5
+      md5: 0c1ad89821d48167a2a0eeba75f540da
+      size: 522694795
+    - path: param.yaml
+      hash: md5
+      md5: 068013b1ece7baae7aa6e8053511c50c
+      size: 111
+    - path: scripts/Train_model.py
+      hash: md5
+      md5: 503c154bf60908ec9b21158a26aa0729
+      size: 2698
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 3b97a6590634b417444e5fa6a3010176
+      size: 82

@@ -1,8 +1,43 @@
 stages:
-  preprocesses:
+  preprocess:
     cmd: python scripts/preprocesses.py --input Local_Storage/raw/MachineLearningRating_v3.csv --output Local_Storage/Preprocessed/edited.csv
     deps:
       - scripts/preprocesses.py
       - Local_Storage/raw/MachineLearningRating_v3.csv
     outs:
       - Local_Storage/Preprocessed/edited.csv
+  eda:
+    cmd: |
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function numerical_univariate --column TotalPremium
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function categorical_univariate --column make
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function bivariate_analysis
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function detect_outliers_with_boxplot --column CalculatedPremiumPerTerm
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function agg_province
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function plan_and_payemnt
+      python scripts/EDA.py --input Local_Storage/Preprocessed/edited.csv --function per_car 
+    deps:
+      - scripts/EDA.py
+      - Local_Storage/Preprocessed/edited.csv
+  transform:
+    cmd: |
+      python scripts/data_transformation.py --input Local_Storage/Preprocessed/edited.csv --function feature_engineering --output Local_Storage/Preprocessed/Transformed.csv
+      python scripts/data_transformation.py --input Local_Storage/Preprocessed/Transformed.csv --function classify_by_cus --output Local_Storage/Preprocessed/per_customer.csv
+      python scripts/data_transformation.py --input Local_Storage/Preprocessed/Transformed.csv --function classify_by_province --output Local_Storage/Preprocessed/Classification_by_province.csv
+    deps:
+      - scripts/data_transformation.py
+      - Local_Storage/Preprocessed/edited.csv
+    outs:
+      - Local_Storage/Preprocessed/Transformed.csv
+      - Local_Storage/Preprocessed/per_customer.csv
+      - Local_Storage/Preprocessed/Classification_by_province.csv
+  predict_premium:
+    cmd: python scripts/Train_model.py --input Local_Storage/Preprocessed/edited.csv --params param.yaml --metrics metrics.json
+    deps:
+      - scripts/Train_model.py
+      - Local_Storage/Preprocessed/edited.csv
+      - param.yaml
+    outs:
+      - metrics.json
+    
+
+    
