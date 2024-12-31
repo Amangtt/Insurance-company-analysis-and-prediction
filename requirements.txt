@@ -1,6 +1,5 @@
 pandas
 numpy
-yaml
 json
 sklearn
 train_test_split
