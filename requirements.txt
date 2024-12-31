@@ -1,14 +1,8 @@
 pandas
 numpy
-json
-sklearn
-train_test_split
-StandardScaler
-mean_squared_error
-r2_score
+PyYAML
+jsonlib-python3  # JSON library; if not using a specific one, remove
+scikit-learn  # sklearn corresponds to this library
 xgboost
-argparse
-scipy 
-f_oneway
-ttest_ind
-chi2_contingency
+argparse  # Standard library, not needed in requirements.txt
+scipy
