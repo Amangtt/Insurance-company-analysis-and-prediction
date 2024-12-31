@@ -1,0 +1,8 @@
+stages:
+  preprocesses:
+    cmd: python scripts/preprocesses.py --input Local_Storage/raw/MachineLearningRating_v3.csv --output Local_Storage/Preprocessed/edited.csv
+    deps:
+      - scripts/preprocesses.py
+      - Local_Storage/raw/MachineLearningRating_v3.csv
+    outs:
+      - Local_Storage/Preprocessed/edited.csv
